@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Léon Aymard — Explorateur du numérique</title>
+  <meta name="description" content="Portfolio de Léon Aymard, élève de 3e à la recherche d'un stage d'observation dans le numérique.">
+  <style>
+    :root{
+      --bg:#070b14;
+      --panel:#0d1422;
+      --text:#f4f7fb;
+      --muted:#aab6c8;
+      --line:#22304a;
+      --accent:#6ee7ff;
+      --accent2:#a78bfa;
+      --good:#7ef29a;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;
+      background:
+        radial-gradient(circle at 80% 10%, rgba(110,231,255,.13), transparent 28%),
+        radial-gradient(circle at 10% 35%, rgba(167,139,250,.10), transparent 25%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1100px,92%);margin:auto}
+    nav{
+      position:sticky;top:0;z-index:10;
+      backdrop-filter:blur(16px);
+      background:rgba(7,11,20,.78);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    nav .inner{height:68px;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-weight:800;letter-spacing:.04em}
+    .logo span{color:var(--accent)}
+    nav ul{display:flex;gap:24px;list-style:none;color:var(--muted);font-size:.95rem}
+    nav a:hover{color:var(--text)}
+    .hero{min-height:calc(100vh - 68px);display:grid;place-items:center;padding:80px 0}
+    .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:50px;align-items:center}
+    .eyebrow{
+      display:inline-flex;gap:9px;align-items:center;
+      padding:7px 12px;border:1px solid var(--line);border-radius:999px;
+      color:var(--muted);font-size:.9rem;margin-bottom:22px;background:rgba(255,255,255,.02)
+    }
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 14px var(--good)}
+    h1{font-size:clamp(3rem,7vw,6.2rem);line-height:.96;letter-spacing:-.06em}
+    h1 .gradient{background:linear-gradient(90deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero p{font-size:1.15rem;color:var(--muted);max-width:700px;margin:25px 0}
+    .buttons{display:flex;gap:13px;flex-wrap:wrap}
+    .btn{padding:12px 18px;border-radius:12px;border:1px solid var(--line);font-weight:700;transition:.2s}
+    .btn.primary{background:var(--text);color:#070b14;border-color:var(--text)}
+    .btn:hover{transform:translateY(-2px)}
+    .terminal{
+      background:#050810;border:1px solid var(--line);border-radius:20px;overflow:hidden;
+      box-shadow:0 25px 80px rgba(0,0,0,.35)
+    }
+    .terminal-bar{padding:12px 15px;border-bottom:1px solid var(--line);display:flex;gap:7px}
+    .terminal-bar i{width:10px;height:10px;border-radius:50%;background:#374151}
+    pre{padding:24px;color:#cfe7ff;font-size:.92rem;overflow:auto}
+    .comment{color:#718096}
+    .cyan{color:var(--accent)}
+    .purple{color:var(--accent2)}
+    section{padding:100px 0}
+    .section-head{margin-bottom:35px}
+    .section-head small{color:var(--accent);font-weight:800;letter-spacing:.12em}
+    .section-head h2{font-size:clamp(2rem,4vw,3.5rem);letter-spacing:-.04em;margin-top:7px}
+    .section-head p{color:var(--muted);max-width:700px;margin-top:10px}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}
+    .card{
+      background:rgba(13,20,34,.82);border:1px solid var(--line);border-radius:18px;padding:23px;
+      transition:.25s
+    }
+    .card:hover{transform:translateY(-5px);border-color:#3c5276}
+    .icon{font-size:2rem;margin-bottom:13px}
+    .card h3{margin-bottom:7px}
+    .card p{color:var(--muted);font-size:.94rem}
+    .about{display:grid;grid-template-columns:1fr 1fr;gap:25px}
+    .panel{background:rgba(13,20,34,.82);border:1px solid var(--line);border-radius:20px;padding:28px}
+    .panel p{color:var(--muted);margin-top:12px}
+    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:25px}
+    .step{border:1px solid var(--line);padding:18px;border-radius:14px;text-align:center;background:#0a101c}
+    .step strong{display:block;font-size:1.5rem;margin-bottom:5px}
+    .game-wrap{display:grid;grid-template-columns:1fr 1fr;gap:25px;align-items:start}
+    canvas{width:100%;height:auto;display:block;background:#050810;border:1px solid var(--line);border-radius:16px}
+    .game-info{color:var(--muted)}
+    .score{font-size:2.3rem;color:var(--text);font-weight:800;margin:10px 0}
+    .game-controls{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap}
+    footer{padding:60px 0;border-top:1px solid var(--line);color:var(--muted)}
+    .contact-box{display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap}
+    @media(max-width:850px){
+      .hero-grid,.about,.game-wrap{grid-template-columns:1fr}
+      .cards,.steps{grid-template-columns:1fr 1fr}
+      nav ul{display:none}
+    }
+    @media(max-width:520px){
+      .cards,.steps{grid-template-columns:1fr}
+      section{padding:70px 0}
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container inner">
+      <a class="logo" href="#">LÉON<span>.</span></a>
+      <ul>
+        <li><a href="#apropos">À propos</a></li>
+        <li><a href="#interets">Mes intérêts</a></li>
+        <li><a href="#projet">Mon projet</a></li>
+        <li><a href="#contact">Stage</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span class="dot"></span> Recherche d'un stage d'observation · 14 → 18 décembre 2026</div>
+          <h1>Je ne veux pas seulement utiliser la technologie.<br><span class="gradient">Je veux comprendre comment elle fonctionne.</span></h1>
+          <p>
+            Je m'appelle Léon Aymard, je suis en 3e au collège La Rocal.
+            Je suis curieux de programmation, de jeux vidéo, de création d'objets
+            et des technologies avancées.
+          </p>
+          <div class="buttons">
+            <a class="btn primary" href="#contact">Découvrir ma candidature ↓</a>
+            <a class="btn" href="#projet">Voir mon mini-projet</a>
+          </div>
+        </div>
+        <div class="terminal">
+          <div class="terminal-bar"><i></i><i></i><i></i></div>
+          <pre><span class="comment">// objectif : apprendre</span>
+
+<span class="purple">const</span> leon = {
+  age: <span class="cyan">14</span>,
+  niveau: <span class="cyan">"3e"</span>,
+  passion: [
+    <span class="cyan">"code"</span>,
+    <span class="cyan">"jeux vidéo"</span>,
+    <span class="cyan">"création 3D"</span>,
+    <span class="cyan">"technologies"</span>
+  ],
+  stage: <span class="cyan">"14 → 18/12/2026"</span>
+};
+
+<span class="comment">// prochaine étape</span>
+<span class="purple">leon</span>.learn();
+<span class="purple">leon</span>.create();
+<span class="purple">leon</span>.ask_questions();</pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="apropos">
+      <div class="container">
+        <div class="section-head">
+          <small>01 — À PROPOS</small>
+          <h2>Un stage pour passer de la curiosité à la découverte.</h2>
+          <p>Je ne sais pas encore quel métier du numérique je voudrais faire plus tard. C'est justement pour cela que je cherche à observer des professionnels et à comprendre leur quotidien.</p>
+        </div>
+        <div class="about">
+          <div class="panel">
+            <h3>Pourquoi le numérique ?</h3>
+            <p>
+              J'aime créer des choses et comprendre comment elles fonctionnent.
+              Le code permet de créer des jeux et des applications, tandis que les
+              technologies de fabrication permettent de transformer une idée numérique
+              en objet réel.
+            </p>
+          </div>
+          <div class="panel">
+            <h3>Ce que je veux apporter</h3>
+            <p>
+              De la curiosité, de l'écoute et l'envie d'apprendre. Pendant une semaine,
+              je veux observer, poser des questions, comprendre les méthodes de travail
+              et découvrir des outils que je ne connais pas encore.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="interets">
+      <div class="container">
+        <div class="section-head">
+          <small>02 — MES INTÉRÊTS</small>
+          <h2>Ce qui me donne envie de créer.</h2>
+        </div>
+        <div class="cards">
+          <article class="card"><div class="icon">🎮</div><h3>Jeux vidéo</h3><p>Comprendre la logique d'un jeu et découvrir comment on transforme une idée en expérience interactive.</p></article>
+          <article class="card"><div class="icon">💻</div><h3>Programmation</h3><p>Écrire du code, résoudre des problèmes et apprendre progressivement de nouveaux langages.</p></article>
+          <article class="card"><div class="icon">🖨️</div><h3>Objets & 3D</h3><p>Découvrir comment une conception numérique peut devenir un objet physique grâce aux machines.</p></article>
+          <article class="card"><div class="icon">🤖</div><h3>Technologies</h3><p>Explorer l'IA, la fabrication numérique, la cybersécurité et les technologies qui changent nos usages.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="projet">
+      <div class="container">
+        <div class="section-head">
+          <small>03 — MINI-PROJET</small>
+          <h2>Un petit jeu créé pour cette candidature.</h2>
+          <p>Le but est simple : déplacer le carré bleu et éviter les obstacles. Utilise les flèches du clavier.</p>
+        </div>
+        <div class="game-wrap">
+          <canvas id="game" width="600" height="360"></canvas>
+          <div class="panel game-info">
+            <h3>🎮 Évite les obstacles</h3>
+            <div>Score</div>
+            <div class="score" id="score">0</div>
+            <p>Ce mini-jeu est volontairement simple : l'objectif est surtout de montrer que je peux concevoir une petite expérience interactive avec du HTML, du CSS et du JavaScript.</p>
+            <div class="game-controls">
+              <button class="btn primary" id="start">Lancer / Recommencer</button>
+            </div>
+            <div class="steps">
+              <div class="step"><strong>01</strong>Idée</div>
+              <div class="step"><strong>02</strong>Code</div>
+              <div class="step"><strong>03</strong>Test</div>
+              <div class="step"><strong>04</strong>Amélioration</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="panel contact-box">
+          <div>
+            <small style="color:var(--accent);font-weight:800;letter-spacing:.12em">04 — MA DEMANDE</small>
+            <h2 style="font-size:clamp(2rem,4vw,3rem);margin-top:7px">Et si je découvrais le numérique de l'intérieur ?</h2>
+            <p style="color:var(--muted);max-width:720px;margin-top:10px">
+              Je recherche un stage d'observation du 14 au 18 décembre 2026.
+              Mon objectif : observer, apprendre, poser des questions et repartir avec
+              de nouvelles connaissances et de nouvelles idées de projets.
+            </p>
+          </div>
+          <div class="buttons"><div class="btn primary">✉️ leon.aymard@gmail.com</div><a class="btn" href="tel:+33646756955">📞 06 46 75 69 55</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <strong>LÉON AYMARD</strong> — Élève de 3e · Collège La Rocal · Stage du 14 au 18 décembre 2026
+    </div>
+  </footer>
+
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+const scoreEl = document.getElementById("score");
+const startBtn = document.getElementById("start");
+
+let player, obstacles, score, running, keys, lastTime, spawnTimer;
+
+function resetGame(){
+  player = {x:70, y:160, w:24, h:24, speed:250};
+  obstacles = [];
+  score = 0;
+  running = true;
+  keys = {};
+  lastTime = performance.now();
+  spawnTimer = 0;
+  scoreEl.textContent = "0";
+  requestAnimationFrame(loop);
+}
+
+function spawn(){
+  const size = 18 + Math.random()*28;
+  obstacles.push({
+    x:canvas.width + size,
+    y:20 + Math.random()*(canvas.height-size-40),
+    w:size, h:size,
+    speed:180 + Math.random()*100
+  });
+}
+
+function collide(a,b){
+  return a.x < b.x+b.w && a.x+a.w > b.x &&
+         a.y < b.y+b.h && a.y+a.h > b.y;
+}
+
+function draw(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.strokeStyle = "#162238";
+  for(let x=0;x<canvas.width;x+=30){
+    ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,canvas.height); ctx.stroke();
+  }
+  for(let y=0;y<canvas.height;y+=30){
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(canvas.width,y); ctx.stroke();
+  }
+  ctx.fillStyle = "#6ee7ff";
+  ctx.fillRect(player.x,player.y,player.w,player.h);
+  ctx.fillStyle = "#a78bfa";
+  obstacles.forEach(o=>ctx.fillRect(o.x,o.y,o.w,o.h));
+  ctx.fillStyle = "#aab6c8";
+  ctx.font = "14px system-ui";
+  ctx.fillText(running ? "↑ ↓ ← → pour bouger" : "Partie terminée — recommence !", 18, 22);
+}
+
+function loop(now){
+  if(!running) { draw(); return; }
+  const dt = Math.min((now-lastTime)/1000, .04);
+  lastTime = now;
+
+  if(keys.ArrowUp) player.y -= player.speed*dt;
+  if(keys.ArrowDown) player.y += player.speed*dt;
+  if(keys.ArrowLeft) player.x -= player.speed*dt;
+  if(keys.ArrowRight) player.x += player.speed*dt;
+  player.x = Math.max(0, Math.min(canvas.width-player.w, player.x));
+  player.y = Math.max(30, Math.min(canvas.height-player.h, player.y));
+
+  spawnTimer += dt;
+  if(spawnTimer > .65){ spawn(); spawnTimer=0; }
+
+  obstacles.forEach(o=>o.x -= o.speed*dt);
+  obstacles = obstacles.filter(o=>o.x+o.w>0);
+
+  for(const o of obstacles){
+    if(collide(player,o)){
+      running=false;
+      break;
+    }
+  }
+
+  score += dt*10;
+  scoreEl.textContent = Math.floor(score);
+  draw();
+  requestAnimationFrame(loop);
+}
+
+window.addEventListener("keydown", e=>{
+  if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.key)) e.preventDefault();
+  keys[e.key]=true;
+});
+window.addEventListener("keyup", e=>keys[e.key]=false);
+startBtn.addEventListener("click", resetGame);
+draw();
+</script>
+</body>
+</html>
